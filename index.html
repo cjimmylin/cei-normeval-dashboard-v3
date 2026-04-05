@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NormEval Dashboard — What Do Normative Ethics Benchmarks Actually Test?</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css?v=20260405b" rel="stylesheet">
+</head>
+<body>
+<a href="#mainTabContent" class="skip-link">Skip to content</a>
+
+<!-- Header -->
+<header class="dashboard-header">
+  <h1>NormEval Dashboard</h1>
+  <p class="subtitle">What Do Normative Ethics Benchmarks Actually Test? &mdash; v2 &mdash; 54 benchmarks, 46 features (26 v1 + 20 v2), 15 trials, 9-model / 3-vendor replication</p>
+</header>
+
+<!-- Navigation Tabs -->
+<ul class="nav nav-tabs" id="mainTabs" role="tablist" aria-label="NormEval Dashboard Navigation">
+  <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab-overview" role="tab">Overview</a></li>
+  <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-papers" role="tab">All Papers</a></li>
+  <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-features" role="tab">Feature Matrix</a></li>
+  <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-traditions" role="tab">Tradition Coverage</a></li>
+  <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-composite" role="tab">Composite Scoring</a></li>
+  <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-trials" role="tab">Trials</a></li>
+  <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-data" role="tab">Data Availability</a></li>
+  <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-crossmodel" role="tab">Cross-Model</a></li>
+  <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-gaps" role="tab">Gaps</a></li>
+  <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-crossvendor" role="tab">Cross-Vendor</a></li>
+</ul>
+<div class="tab-position" id="tab-position">Tab 1 of 10</div>
+
+<!-- Tab Content -->
+<div class="tab-content" id="mainTabContent">
+
+  <!-- ====== Tab 1: Overview ====== -->
+  <div class="tab-pane fade show active" id="tab-overview" role="tabpanel">
+    <div class="tab-explainer">
+      <strong>Key conclusion:</strong> The field has invested heavily in benchmarks that test whether LLMs reach the "right" moral judgment, but not <em>how</em> they reason. Only 10 of 54 benchmarks (19%) evaluate moral reasoning quality rather than just classifying outputs. Cross-vendor replication (9 models, 3 providers) confirms these findings are not artifacts of a single model &mdash; knowledge items reach universal ceiling while judgment items reveal three distinct ethical profiles that cut across vendor lines. This dashboard invites the community to rebalance the portfolio toward reasoning-process benchmarks and under-represented ethical traditions.
+      <br><br>
+      <strong>What this tab shows:</strong> A high-level summary of the NormEval meta-analysis &mdash; 54 normative ethics benchmarks scored across 46 features (26 core + 20 extended), with five empirically tested claims about the current state of LLM ethics evaluation. All claims were validated across 9 models from 3 vendors (Anthropic, Google, OpenAI) &mdash; see <a href="#" onclick="activateTab('tab-crossmodel');return false;" style="color:var(--accent-blue);">Tabs 8&ndash;10</a> for replication details.
+      <br><br>
+      <strong>How to read it:</strong> The <em>KPI cards</em> at top show the corpus at a glance. Of 54 benchmarks analyzed, only 24 pass the dual-gate filter (normative depth &ge; 40 AND data publicly available). The <em>Five Claims</em> section presents the paper's central arguments with statistical tests: C1 (ceiling effect, p&lt;10<sup>-15</sup>), C2 (utilitarian bias, p=0.015), C3 (care/contractarian void), C4 (reasoning deficit, p&lt;0.001), and C5 (data bottleneck). Each claim has a status badge (Confirmed, Revised, or Challenged).
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="row g-3 mb-4" id="kpi-cards"></div>
+
+    <!-- v2 Feature Highlights -->
+    <div class="row g-3 mb-3" id="v2-highlights-row"></div>
+
+    <!-- Claims + Donut -->
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Gate Pass/Fail Breakdown</h3>
+          <div id="chart-gates-donut" class="echarts-box-sm"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Five Claims</h3>
+          <div id="claims-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expert Analysis: Overview -->
+    <div class="expert-analysis" style="border-left:3px solid #a78bfa;">
+      <strong>&#x1f50d; Expert Analysis &mdash; Overview Metrics</strong><br>
+      <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Science Communication &amp; Psychometrics perspectives</em>
+      <br><br>
+      <strong>The 24/54 pass rate:</strong> Only 44% of normative ethics benchmarks pass the dual-gate filter. This is not a harsh cutoff &mdash; it reflects two reasonable minimum requirements: (1) the benchmark must engage normative ethics at more than a superficial level (ND &ge; 40), and (2) the data must be publicly available for replication. From a psychometrics perspective: &ldquo;A benchmark that cannot be replicated is not a benchmark &mdash; it is an anecdote. The data gate is not a quality judgment but a practical necessity for scientific progress.&rdquo;
+      <br><br>
+      <strong>The Five Claims at a glance:</strong> C1 (ceiling effect) is the most statistically robust finding (p&lt;10<sup>&minus;15</sup>) &mdash; frontier models saturate the most-cited ethics benchmark (ETHICS, Hendrycks 2021) at 100%. C2 (utilitarian bias, p=0.015) reveals that benchmarks systematically over-represent utilitarian reasoning. C3 (care/contractarian void) identifies entire ethical traditions with near-zero coverage. C4 (reasoning deficit, p&lt;0.001) shows that most benchmarks test moral <em>judgment</em>, not moral <em>reasoning process</em>. C5 (data bottleneck) reveals a sociological, not quality-based, correlation between data availability and venue.
+      <br><br>
+      <strong>Reading the donut:</strong> The three failure categories (ND-only fail, data-only fail, both fail) are roughly equal in size, meaning the two gates are independent &mdash; philosophical depth does not predict data availability. From a science communication perspective: &ldquo;This is the most important structural finding. It means the community can improve coverage by releasing data for existing high-ND benchmarks, not by building new benchmarks from scratch.&rdquo;
+    </div>
+
+    <!-- Tradition Frequency Bar -->
+    <div class="chart-container">
+      <h3>Tradition Frequency (benchmarks with score >= 50)</h3>
+      <div id="chart-tradition-freq" class="echarts-box-sm"></div>
+    </div>
+  </div>
+
+  <!-- ====== Tab 2: All Papers ====== -->
+  <div class="tab-pane fade" id="tab-papers" role="tabpanel">
+    <div class="tab-explainer">
+      <strong>Analysis &amp; interpretation:</strong> The top-ranked benchmarks (MoReBench, MoralReason-QA, PrinciplismQA) share a pattern: they test <em>how</em> the model reasons, not just what it concludes. Conversely, highly-cited benchmarks like ETHICS (Hendrycks 2021) rank lower because they saturate at 100% for frontier models. Filter by "Pass Only" to see the 24 benchmarks that form the recommended evaluation suite.
+      <br><br>
+      <strong>What this tab shows:</strong> A sortable, filterable table of all 54 benchmarks ranked by composite score. Each benchmark is scored on three axes: <span style="color:var(--nd-color);">Normative Depth (ND)</span> measures philosophical sophistication (traditions covered, reasoning tested, grounding quality); <span style="color:var(--pe-color);">Practical Ecosystem (PE)</span> measures implementability (data access, code, licensing, harness integration); and <span style="color:var(--ci-color);">Community Impact (CI)</span> measures scholarly adoption (citations, venue tier, downstream use).
+      <br><br>
+      <strong>How to read it:</strong> The composite score = ND (40%) + PE (35%) + CI (25%). <span class="gate-badge pass" style="font-size:0.7rem;">PASS</span> rows clear both gates: ND &ge; 40 AND data publicly available. <span class="gate-badge fail" style="font-size:0.7rem;">FAIL</span> rows fail one or both. The colored <em>sparkbars</em> show each axis visually. The <em>tradition dots</em> column shows which of five normative traditions (virtue, deontological, utilitarian, care, contractarian) the benchmark engages at &ge; 50. Click any row to expand its full profile with v2 quality metrics.
+    </div>
+
+    <div class="papers-toolbar">
+      <input type="text" id="paper-search" placeholder="Search benchmarks...">
+      <select id="filter-gate">
+        <option value="all">All Gates</option>
+        <option value="pass">Pass Only</option>
+        <option value="fail">Fail Only</option>
+      </select>
+      <select id="filter-tradition">
+        <option value="all">All Traditions</option>
+        <option value="virtue">Virtue</option>
+        <option value="deontological">Deontological</option>
+        <option value="utilitarian">Utilitarian</option>
+        <option value="care">Care</option>
+        <option value="contractarian">Contractarian</option>
+      </select>
+      <select id="filter-year">
+        <option value="all">All Years</option>
+      </select>
+      <button class="btn-export" id="btn-export-csv">Export CSV</button>
+    </div>
+
+    <div class="papers-table-wrap">
+      <table class="papers-table" id="papers-table">
+        <thead>
+          <tr>
+            <th data-sort="rank">#</th>
+            <th data-sort="short_title">Benchmark</th>
+            <th data-sort="year">Year</th>
+            <th data-sort="nd">ND</th>
+            <th data-sort="pe">PE</th>
+            <th data-sort="ci">CI</th>
+            <th data-sort="composite">Composite</th>
+            <th data-sort="passes_gates">Gate</th>
+            <th>Traditions</th>
+            <th data-sort="size">Size</th>
+            <th data-sort="format">Format</th>
+            <th data-sort="a6">A6</th>
+          </tr>
+        </thead>
+        <tbody id="papers-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- Expert Analysis: Papers Table -->
+    <div class="expert-analysis" style="border-left:3px solid #5b8def;">
+      <strong>&#x1f50d; Expert Analysis &mdash; Benchmark Rankings</strong><br>
+      <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Educational Measurement &amp; Kantian Ethics perspectives</em>
+      <br><br>
+      <strong>Why the top 3 matter:</strong> MoReBench, MoralReason-QA, and PrinciplismQA rank highest because they test <em>how</em> models reason, not just <em>what</em> they conclude. From an educational measurement perspective: &ldquo;In educational assessment, we distinguish between items that test recall (knowledge) and items that test application (reasoning). Most ethics benchmarks are recall-level &mdash; they ask &lsquo;is this action ethical?&rsquo; rather than &lsquo;justify your ethical reasoning using framework X.&rsquo; The top-ranked benchmarks bridge this gap.&rdquo;
+      <br><br>
+      <strong>The composite formula:</strong> ND (40%) + PE (35%) + CI (25%). The heavy ND weight is deliberate &mdash; From a Kantian ethics perspective: &ldquo;A philosophically shallow benchmark with wide adoption (high CI) and easy access (high PE) does more harm than good: it gives the false impression that alignment has been achieved when only surface-level moral classification has been tested.&rdquo; The weight sensitivity analysis (<a href="#" onclick="activateTab('tab-composite');return false;" style="color:var(--accent-blue);">Tab 5</a>) confirms this ranking is robust across 231 weight combinations.
+      <br><br>
+      <strong>How to use the filters:</strong> Toggle &ldquo;Pass Only&rdquo; to see the 24 recommended benchmarks. Filter by tradition to reveal gaps &mdash; filtering by &ldquo;Care&rdquo; or &ldquo;Contractarian&rdquo; shows only 2&ndash;4 results, confirming Claim C3. Sort by any column header to rerank. Export CSV for your own analysis.
+    </div>
+  </div>
+
+  <!-- ====== Tab 3: Feature Matrix ====== -->
+  <div class="tab-pane fade" id="tab-features" role="tabpanel">
+    <div class="tab-explainer">
+      <strong>Key patterns to notice:</strong> The A3 column (reasoning type) is mostly dark &mdash; most benchmarks test moral judgment only, not the reasoning process. The B3 column (data availability) has a sharp bright/dark divide that maps directly to the PASS/FAIL gate. The A1 column (tradition count) reveals that most benchmarks engage only 1&ndash;2 traditions, with care ethics and contractarianism systematically absent.
+      <br><br>
+      <strong>What this tab shows:</strong> An interactive heatmap displaying every benchmark (rows) against every scored feature (columns). Colors encode the scoring axis: <span style="color:var(--nd-color);">blue = Normative Depth</span> features (A1&ndash;A6: tradition count, framework depth, reasoning type, uncertainty handling, pluralism, philosophical grounding), <span style="color:var(--pe-color);">green = Practical Ecosystem</span> features (B1&ndash;B7: format, dataset size, data/code availability, licensing, harness integration, implementability), and <span style="color:var(--ci-color);">orange = Community Impact</span> features (C2&ndash;C5: citations, venue tier, downstream adoption).
+      <br><br>
+      <strong>How to read it:</strong> Brighter cells = higher scores. Hover over any cell for the exact value. The benchmarks are ordered by composite rank (best at top). Look for vertical patterns: a bright column means most benchmarks score well on that feature; a dark column reveals a systemic gap. Look for horizontal patterns: a benchmark with bright cells across all columns is strong overall.
+    </div>
+    <div class="chart-container">
+      <h3>Feature Heatmap (ranked by composite)</h3>
+      <div id="chart-feature-heatmap" class="echarts-box-lg"></div>
+    </div>
+
+    <!-- Expert Analysis: Feature Matrix -->
+    <div class="expert-analysis" style="border-left:3px solid #f0983e;">
+      <strong>&#x1f50d; Expert Analysis &mdash; Feature Heatmap Patterns</strong><br>
+      <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Psychometrics &amp; RLHF/Alignment perspectives</em>
+      <br><br>
+      <strong>Three critical dark columns:</strong> (1) A3 (Reasoning Type) is mostly dark because only 10 of 54 benchmarks (19%) evaluate reasoning process rather than just output classification. From a RLHF/alignment perspective: &ldquo;This is the single biggest gap in LLM ethics evaluation. We test whether models reach the right answer but not whether they reason correctly. A model that outputs &lsquo;do not steal&rsquo; because of frequency statistics is indistinguishable from one that applies the categorical imperative.&rdquo; (2) A5 (Pluralism) is dark because most benchmarks assume a single ethical tradition. (3) B3 (Data Availability) has a binary bright/dark pattern that directly maps to the PASS/FAIL gate.
+      <br><br>
+      <strong>The horizontal bright bands:</strong> Top-ranked benchmarks (MoReBench, PrinciplismQA) show bright cells across nearly all columns &mdash; they are strong on both normative and practical dimensions. Lower-ranked benchmarks show &ldquo;spiky&rdquo; profiles: bright on one axis, dark on another.
+      <br><br>
+      <strong>How to use this:</strong> If you are building a new benchmark, look at the darkest columns &mdash; those are the dimensions where the field has the most room to improve. If you are selecting benchmarks to evaluate your model, look at rows with the most consistently bright cells.
+    </div>
+
+    <!-- Feature Reference Table -->
+    <div class="chart-container" style="margin-top: 1.5rem;">
+      <h3>Complete Feature Reference (44 features across 5 axes)</h3>
+      <p style="color:var(--text-secondary);font-size:0.82rem;margin-bottom:1rem;">
+        Every feature used in the NormEval framework. Features marked with a composite weight contribute to the scoring formula; others provide descriptive metadata or empirical context.
+        <span class="version-badge v1">v1</span> = original 26 features &nbsp;
+        <span class="version-badge v2">v2</span> = 18 extended features added for cross-vendor analysis
+      </p>
+      <div class="feature-toolbar">
+        <select id="filter-feature-axis">
+          <option value="all">All Axes</option>
+          <option value="ND">Normative Depth (A)</option>
+          <option value="PE">Practical Ease (B)</option>
+          <option value="CI">Community Impact (C)</option>
+          <option value="META">Metadata (D)</option>
+          <option value="EQ">Empirical Quality (E)</option>
+        </select>
+        <select id="filter-feature-version">
+          <option value="all">All Versions</option>
+          <option value="v1">v1 Only</option>
+          <option value="v2">v2 Only</option>
+        </select>
+        <label class="feature-toggle-label">
+          <input type="checkbox" id="filter-feature-composite"> Composite only
+        </label>
+      </div>
+      <div class="papers-table-wrap">
+        <table class="papers-table feature-ref-table" id="feature-ref-table">
+          <thead>
+            <tr>
+              <th style="width:55px;">ID</th>
+              <th style="width:180px;">Feature</th>
+              <th style="width:90px;">Axis</th>
+              <th style="width:140px;">Scale</th>
+              <th>Description</th>
+              <th style="width:70px;">Weight</th>
+              <th style="width:220px;">Corpus Distribution</th>
+              <th style="width:38px;">Ver.</th>
+            </tr>
+          </thead>
+          <tbody id="feature-ref-tbody"></tbody>
+        </table>
+      </div>
+      <div class="feature-ref-summary" id="feature-ref-summary"></div>
+    </div>
+
+    <!-- Expert Analysis: Feature Reference Table (Council-Designed) -->
+    <div class="expert-analysis" style="border-left:3px solid #a78bfa;">
+      <strong>&#x1f50d; Expert Analysis &mdash; Reading the Feature Framework</strong><br>
+      <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; 12-member council: Psychometrics, Philosophy of Science, ML Evaluation, Normative Ethics, Information Science, and Cross-Cultural Ethics perspectives</em>
+      <br><br>
+      <strong>Why 44 features?</strong> From a psychometrics perspective: &ldquo;The 26 v1 features characterized benchmarks <em>as designed</em> &mdash; their philosophical ambition, data accessibility, and scholarly impact. But our cross-vendor trials revealed that design quality does not predict empirical performance. A benchmark can be philosophically sophisticated (high ND) yet produce zero variance across models (E2=1). The 18 v2 features capture how benchmarks <em>actually behave</em> when administered to frontier models. This design-vs-performance gap is the central insight of the expanded framework.&rdquo;
+      <br><br>
+      <strong>The five axes serve different audiences.</strong> From a philosophy of science perspective: &ldquo;Axis A (Normative Depth) answers: <em>does this benchmark engage genuine ethical reasoning?</em> This matters to ethicists and alignment researchers. Axis B (Practical Ease) answers: <em>can I actually run this benchmark?</em> This matters to ML engineers. Axis C (Community Impact) answers: <em>has this benchmark earned scholarly trust?</em> This matters to reviewers and program committees. Axis D (Metadata) provides provenance. Axis E (Empirical Quality) answers the question no other axis addresses: <em>does this benchmark still work on frontier models?</em>&rdquo;
+      <br><br>
+      <strong>Which features matter most?</strong> From a normative ethics perspective: &ldquo;Only 16 of 44 features enter the composite formula, and only 6 carry weights &ge; 15%. A6 (Philosophical Grounding) and B7 (Implementability) together account for 25% + 30% = 55% of their respective axis scores. This means the composite is dominated by two expert judgments: <em>how philosophically rigorous is this benchmark?</em> and <em>how easy is it to implement?</em> The remaining features provide context and nuance, but the ranking is driven by these two pillars.&rdquo;
+      <br><br>
+      <strong>The v2 features reveal hidden structure.</strong> From an ML evaluation perspective: &ldquo;Three v2 features are particularly diagnostic. A9 (Metaethical Stance) shows that 76% of benchmarks assume moral realism &mdash; items have &lsquo;correct&rsquo; answers. This is fine for knowledge questions but problematic for judgment dilemmas. B10 (Contamination Risk) shows that 52% of benchmarks have full item sets publicly available, meaning ceiling effects may reflect memorization rather than reasoning. E5 (Reasoning vs. Judgment Balance) confirms at the item level what A3 shows at the benchmark level: the field overwhelmingly tests <em>what</em> models conclude, not <em>how</em> they reason.&rdquo;
+      <br><br>
+      <strong>What the distributions reveal.</strong> From a cross-cultural ethics perspective: &ldquo;Filter by Axis A and read the distribution column top-to-bottom. You will see a portrait of the field&rsquo;s blind spots: 76% Western-only (A7), 72% monolingual (A8), 89% secular-only (A13), 76% moral-realist (A9). The benchmarks we have are not just philosophically shallow (Claim C4) &mdash; they are culturally, linguistically, and metaethically narrow. The feature table makes these gaps quantifiable and therefore actionable.&rdquo;
+    </div>
+  </div>
+
+  <!-- ====== Tab 4: Tradition Coverage ====== -->
+  <div class="tab-pane fade" id="tab-traditions" role="tabpanel">
+    <div class="tab-explainer">
+      <strong>Why this matters (Claim C3):</strong> This tradition imbalance is not just an academic curiosity &mdash; it means LLM alignment is being evaluated almost exclusively through utilitarian and deontological lenses. Care ethics (Gilligan, Noddings, Tronto), which emphasizes relationships, context, and vulnerability, is the dominant ethical framework in nursing, social work, and education. Contractarianism (Rawls, Scanlon, Gauthier) underpins justice theory and political philosophy. Their near-total absence means that entire domains of moral reasoning go untested. When we say an LLM is "ethically aligned," we mean it passes utilitarian and deontological tests &mdash; we do not know how it handles care-based or contractarian moral dilemmas.
+      <br><br>
+      <strong>What this tab shows:</strong> How the 54 benchmarks distribute across five Western normative ethics traditions: virtue ethics, deontological ethics, utilitarian ethics, care ethics, and contractarian ethics. The heatmap shows each benchmark's engagement score (0&ndash;100) with each tradition. The bar chart counts how many benchmarks score &ge; 50 per tradition. The entropy chart measures how evenly each benchmark spreads across traditions (higher = more pluralistic).
+      <br><br>
+      <strong>How to read it:</strong> In the heatmap, look for the columns with the most bright cells (utilitarian and deontological dominate) versus the darkest columns (care ethics and contractarian are near-empty). A benchmark with high entropy engages multiple traditions; a benchmark with zero entropy tests only one. The bar chart makes the imbalance unmistakable: utilitarian and deontological traditions appear in 20+ benchmarks each, while care ethics appears in only 2 and contractarian in 4.
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Tradition Heatmap (37 benchmarks x 5 traditions)</h3>
+          <div id="chart-tradition-heatmap" class="echarts-box-lg"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Tradition Engagement (count >= 50)</h3>
+          <div id="chart-tradition-bar" class="echarts-box-sm"></div>
+        </div>
+        <div class="chart-container">
+          <h3>Shannon Entropy per Benchmark</h3>
+          <div id="chart-entropy" class="echarts-box-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expert Analysis: Tradition Coverage -->
+    <div class="expert-analysis" style="border-left:3px solid #ef5b5b;">
+      <strong>&#x1f50d; Expert Analysis &mdash; The Tradition Imbalance</strong><br>
+      <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Kantian Ethics, Consequentialist Ethics &amp; Cross-Cultural perspectives</em>
+      <br><br>
+      <strong>The 20:2 ratio:</strong> Utilitarian ethics appears in 20+ benchmarks; care ethics appears in only 2. From a Kantian ethics perspective: &ldquo;This is not because care ethics is less important &mdash; it is the dominant ethical framework in nursing, social work, education, and disability studies. It is absent because the ML evaluation community draws primarily from analytical philosophy and computer science, traditions that privilege rule-based and consequentialist reasoning.&rdquo;
+      <br><br>
+      <strong>Why entropy matters:</strong> The Shannon entropy chart reveals which benchmarks are pluralistic (high entropy = engages multiple traditions equally) versus monolithic (low entropy = tests only one tradition). Most benchmarks have very low entropy, meaning they test a single ethical perspective. From a consequentialist ethics perspective: &ldquo;Even utilitarianism is poorly served by this. A benchmark that tests utilitarian <em>conclusions</em> without testing the utilitarian <em>calculus</em> (expected value reasoning, impartiality, scope sensitivity) is testing a caricature of consequentialism.&rdquo;
+      <br><br>
+      <strong>The path forward:</strong> From a cross-cultural perspective: &ldquo;And these are only <em>Western</em> traditions. Confucian role ethics, Ubuntu communitarian ethics, Islamic jurisprudence (fiqh), and Buddhist compassion ethics are entirely absent. The tradition imbalance is worse than the 5-tradition view suggests.&rdquo; The Gaps tab (<a href="#" onclick="activateTab('tab-gaps');return false;" style="color:var(--accent-blue);">Tab 9</a>) shows a care ethics prototype demonstrating that filling these voids is feasible, not just aspirational.
+    </div>
+  </div>
+
+  <!-- ====== Tab 5: Composite Scoring ====== -->
+  <div class="tab-pane fade" id="tab-composite" role="tabpanel">
+    <div class="tab-explainer">
+      <strong>Key conclusion:</strong> The dual-gate mechanism (ND &ge; 40, data available) is the primary determinant of the ranking &mdash; it cleanly separates philosophically grounded, implementable benchmarks from those that fail on one or both dimensions. Weight sensitivity matters only for boundary cases, not for the core recommended suite. This means the NormEval framework is robust: reasonable people can disagree about how much to weight philosophical depth vs practical access vs scholarly impact, and the Top 15 barely changes.
+      <br><br>
+      <strong>What this tab shows:</strong> How the composite score is computed and whether the Top 15 ranking is robust to different weighting choices. The scatter plot shows each benchmark positioned by Normative Depth (x-axis) vs Practical Ecosystem (y-axis), with bubble size encoding Community Impact. The sensitivity chart shows what happens when we vary the weight triplet across 231 combinations.
+      <br><br>
+      <strong>How to read it:</strong> In the scatter plot, benchmarks in the upper-right quadrant score high on both ND and PE &mdash; these are the strongest candidates. Benchmarks that are high-ND but low-PE (upper-left) are philosophically rich but practically inaccessible (often due to missing data). The gate mechanism filters these out: you need BOTH normative depth AND data availability to pass. The sensitivity analysis tests every weight triplet from (10,10,80) to (80,10,10) in increments of 10. With 24 gate-passing benchmarks, composite weights now matter at the margin &mdash; only 1 of 18 tested triplets preserves the exact same Top 15. However, all core benchmarks remain stable.
+    </div>
+
+    <!-- Scoring Equation & Rationale -->
+    <div class="scoring-equation-section">
+      <div class="row g-3">
+        <div class="col-lg-7">
+          <div class="scoring-equation-box">
+            <h3>Composite Scoring Formula</h3>
+
+            <!-- Main Equation -->
+            <div class="equation-main">
+              <span class="eq-label">Composite</span>
+              <span class="eq-equals">=</span>
+              <span class="eq-term nd-term">ND <span class="eq-weight">&times; 0.40</span></span>
+              <span class="eq-plus">+</span>
+              <span class="eq-term pe-term">PE <span class="eq-weight">&times; 0.35</span></span>
+              <span class="eq-plus">+</span>
+              <span class="eq-term ci-term">CI <span class="eq-weight">&times; 0.25</span></span>
+            </div>
+
+            <!-- Sub-axis formulas -->
+            <div class="equation-sub-group">
+              <div class="equation-sub">
+                <span class="eq-sub-label" style="color:var(--nd-color);">ND</span>
+                <span class="eq-sub-eq">=</span>
+                <span class="eq-sub-terms">A2&times;25 + A6&times;20 + A1&times;15 + A3&times;15 + A5&times;15 + A4&times;10</span>
+              </div>
+              <div class="equation-sub">
+                <span class="eq-sub-label" style="color:var(--pe-color);">PE</span>
+                <span class="eq-sub-eq">=</span>
+                <span class="eq-sub-terms">B7&times;30 + B3&times;20 + B4&times;15 + B6&times;15 + B9&times;10 + B5&times;10</span>
+              </div>
+              <div class="equation-sub">
+                <span class="eq-sub-label" style="color:var(--ci-color);">CI</span>
+                <span class="eq-sub-eq">=</span>
+                <span class="eq-sub-terms">C2&times;35 + C4&times;30 + C3&times;20 + C5&times;15</span>
+              </div>
+            </div>
+
+            <!-- Gates -->
+            <div class="equation-gates">
+              <h4>Hard Gates (must pass both)</h4>
+              <div class="gate-row">
+                <span class="gate-icon pass">&#x2713;</span>
+                <span class="gate-text"><strong>Gate 1:</strong> ND &ge; 40 &mdash; minimum normative depth threshold</span>
+              </div>
+              <div class="gate-row">
+                <span class="gate-icon pass">&#x2713;</span>
+                <span class="gate-text"><strong>Gate 2:</strong> Data publicly available &mdash; B3 &ge; 50 (GitHub, HuggingFace, or equivalent)</span>
+              </div>
+              <div class="gate-note">Benchmarks failing either gate are excluded from the recommended suite regardless of composite score.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="scoring-rationale-box">
+            <h3>Design Rationale</h3>
+
+            <div class="rationale-item">
+              <strong style="color:var(--nd-color);">Why ND is weighted highest (40%)</strong>
+              <p>Normative Depth measures what <em>makes an ethics benchmark an ethics benchmark</em> &mdash; whether it genuinely engages moral reasoning rather than surface-level sentiment classification. Without philosophical substance, high PE and CI merely indicate a widely-used dataset that happens to have moral-sounding labels. The 40% weight ensures that philosophical rigor is the primary differentiator.</p>
+            </div>
+
+            <div class="rationale-item">
+              <strong style="color:var(--pe-color);">Why PE is weighted second (35%)</strong>
+              <p>Practical Ecosystem measures whether a benchmark can actually be <em>used</em>. A philosophically brilliant benchmark locked behind a paywall with no code and no harness integration has zero real-world impact. PE rewards benchmarks that lower the barrier to adoption: public data, clear documentation, evaluation harness support.</p>
+            </div>
+
+            <div class="rationale-item">
+              <strong style="color:var(--ci-color);">Why CI is weighted lowest (25%)</strong>
+              <p>Community Impact captures scholarly influence, but it introduces recency bias (new benchmarks start at 0 citations) and venue prestige bias (workshops penalized regardless of quality). The 25% weight ensures that CI contributes but does not dominate &mdash; a new, high-quality benchmark should not be penalized for being recent.</p>
+            </div>
+
+            <div class="rationale-item">
+              <strong>Why hard gates instead of soft thresholds</strong>
+              <p>The dual-gate mechanism enforces two non-negotiable minimums: <em>the benchmark must engage ethics substantively</em> (ND &ge; 40) and <em>the benchmark must be replicable</em> (data available). Without hard gates, a benchmark with ND = 5 but extremely high CI (e.g., a widely-cited non-ethics dataset) could rank above philosophically rigorous alternatives. The sensitivity analysis confirms these gates are the primary ranking determinant &mdash; not the continuous weights.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expert Analysis: Scoring Design Council -->
+      <div class="expert-analysis" style="border-left:3px solid var(--accent-purple);margin-top:1.5rem;">
+        <strong>&#x1f50d; Expert Analysis &mdash; Scoring System Design</strong><br>
+        <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; 12-member council: Decision Science, Educational Measurement, Biostatistics, Philosophy of Science, Normative Ethics, and RLHF/Alignment perspectives</em>
+        <br><br>
+        <strong>The weights encode a value judgment.</strong> From a decision science perspective: &ldquo;Any multi-criteria scoring system embeds the designer&rsquo;s priorities. We chose 40:35:25 because we believe philosophical rigor (ND) matters most, practical usability (PE) matters nearly as much, and scholarly prestige (CI) is important but should not dominate. These weights are debatable &mdash; and that is precisely why we provide the sensitivity analysis below. If you believe community adoption matters more, increase CI&rsquo;s weight. The key insight is that the Top 15 barely changes across 231 weight combinations, because the dual-gate mechanism does the heavy lifting.&rdquo;
+        <br><br>
+        <strong>Within-axis weights reflect construct priorities.</strong> From an educational measurement perspective: &ldquo;The ND formula gives 25% weight to A2 (depth of engagement) and 20% to A6 (philosophical grounding) &mdash; these two features alone account for 45% of the ND score. This is deliberate: a benchmark that deeply applies an ethical framework (A2 = 100) with expert-validated philosophical grounding (A6 = 5) will dominate a benchmark that merely mentions multiple traditions (A1 = 5) without engaging any of them deeply. The PE formula similarly prioritizes B7 (implementability, 30%) and B3 (data availability, 20%) because a benchmark you cannot access or run has zero practical value regardless of its licensing or harness coverage.&rdquo;
+        <br><br>
+        <strong>The gate mechanism has empirical support.</strong> From a biostatistics perspective: &ldquo;We tested every weight triplet from (10,10,80) to (80,10,10) in increments of 10 &mdash; 231 combinations total. Across all of them, the set of gate-passing benchmarks dominates the Top 15. This means the gates are the binding constraint, not the weights. From a statistical perspective, this is reassuring: it means the framework is robust to subjective weighting choices. The continuous scoring within the gate-passing set provides fine-grained ranking, but the coarse pass/fail determination is what matters most for practical recommendations.&rdquo;
+        <br><br>
+        <strong>Why not include v2 features in the composite?</strong> From a philosophy of science perspective: &ldquo;The 18 v2 features (A9&ndash;A13, B10&ndash;B12, D5&ndash;D6, E1&ndash;E5) are deliberately excluded from the composite formula. The v1 features describe benchmarks as <em>designed</em>; the v2 features describe how they <em>performed</em>. Mixing design features with empirical performance features would create a circular dependency: a benchmark&rsquo;s composite score would depend on how well it discriminated between models, which itself depends on which models were tested. The v2 features provide diagnostic context &mdash; they help users understand <em>why</em> a benchmark ranks where it does &mdash; but they should not influence the ranking itself.&rdquo;
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>ND vs PE Scatter (bubble size = CI)</h3>
+          <div id="chart-nd-pe-scatter" class="echarts-box"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Sensitivity: Gate Threshold Impact</h3>
+          <div id="chart-gate-sensitivity" class="echarts-box-sm"></div>
+        </div>
+        <div class="chart-container" style="padding: 1.25rem;">
+          <h3>Key Insight</h3>
+          <div class="claim-card" style="border-left: 3px solid var(--accent-green);">
+            <p style="font-size: 0.85rem; margin-bottom: 0.5rem;">
+              <strong>Gates determine Top 15, not weights.</strong>
+            </p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">
+              All 15 gate-passing benchmarks appear in the Top 15 across all 231 weight triplets tested.
+              Zero borderline cases. The dual-gate mechanism (ND >= 40, data available) is the binding constraint.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expert Analysis: Composite Scoring -->
+    <div class="expert-analysis" style="border-left:3px solid #4ecb71;">
+      <strong>&#x1f50d; Expert Analysis &mdash; Scoring Robustness</strong><br>
+      <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Educational Measurement perspective</em>
+      <br><br>
+      <strong>The scatter plot tells two stories:</strong> First, the upper-right quadrant (high ND, high PE) is sparse &mdash; few benchmarks excel on both philosophical depth AND practical accessibility. This is the opportunity zone for the community. Second, there are many benchmarks in the lower-right (high PE, low ND): easily accessible datasets that test shallow moral classification. From a biostatistics perspective: &ldquo;The field has optimized for convenience, not for construct validity. It is easier to release a 10K-item sentiment-like moral judgment dataset than to design a 50-item benchmark with proper Kohlberg staging or care ethics scenarios.&rdquo;
+      <br><br>
+      <strong>Weight sensitivity:</strong> From an educational measurement perspective: &ldquo;The sensitivity analysis is the most reassuring finding in the entire dashboard. Across 231 weight triplets, the Top 15 is nearly invariant. This means the dual-gate mechanism (ND &ge; 40, data available) does the heavy lifting &mdash; the continuous scoring within the gate-passing set is refinement, not determination. If you disagree with our 40:35:25 weighting, you can plug in your own and get essentially the same recommendations.&rdquo;
+      <br><br>
+      <strong>Practical guidance:</strong> If your priority is philosophical rigor, weight ND higher. If your priority is quick evaluation, weight PE higher. If your priority is community adoption, weight CI higher. In all cases, the top 5 benchmarks remain stable.
+    </div>
+  </div>
+
+  <!-- ====== Tab 6: Trials ====== -->
+  <div class="tab-pane fade" id="tab-trials" role="tabpanel">
+    <div class="tab-explainer">
+      <strong>Key findings:</strong> (1) <em>Ceiling effect confirmed</em> &mdash; ETHICS (T1) produces 100% accuracy across all sub-datasets, confirming Claim C1 that frontier LLMs saturate the most-cited benchmark. This ceiling was subsequently confirmed across all 9 models from 3 vendors on knowledge items (T6, T9, T11, T15). (2) <em>Framework difficulty hierarchy</em>: Utilitarian reasoning is easiest (77%), virtue ethics is moderate (63%), and deontological reasoning is hardest (50%) &mdash; LLMs are measurably more consequentialist than deontological. (3) <em>Refusal as a signal</em> &mdash; T10 (Pluralistic Moral Gap) and T13 (Greatest Good) show 8&ndash;10% refusal rates, indicating items that push against the model's alignment boundaries. (4) <em>MoReBench tests reasoning, not judgment</em> &mdash; At only 10% rubric coverage, MoReBench (T2) is the hardest benchmark because it evaluates <em>how</em> the model reasons, not just what it concludes.
+      <br><br>
+      <strong>What this tab shows:</strong> Results from 15 implementation trials (T1&ndash;T15) originally administered to Claude Opus 4.6. Each trial sampled 20&ndash;100 items and measured accuracy, discriminative power (0&ndash;100 scale, where higher = better differentiation of reasoning quality), refusal rate, and framework difficulty. Trials T6&ndash;T15 were subsequently replicated across 9 models from 3 vendors (see <a href="#" onclick="activateTab('tab-crossmodel');return false;" style="color:var(--accent-blue);">Tabs 8&ndash;10</a>).
+      <br><br>
+      <strong>How to read it:</strong> The bar chart shows accuracy (green) alongside discriminative power (blue) for each trial. High accuracy + low discriminative power (like T1/ETHICS at 100% accuracy, 0 discriminative) means the benchmark is too easy for frontier models &mdash; a ceiling effect. Low accuracy + high discriminative power (like T8/AMAeval at 73%, 75 discriminative) means the benchmark genuinely challenges the model and reveals meaningful performance variation. The framework difficulty pie shows whether items were rated Easy, Medium, or Hard.
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Trial Accuracy &amp; Discriminative Power</h3>
+          <div id="chart-trials-bar" class="echarts-box"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Framework Difficulty</h3>
+          <div id="chart-difficulty-pie" class="echarts-box-sm"></div>
+        </div>
+        <div class="chart-container">
+          <h3>Trial Summary</h3>
+          <div id="trial-summary-stats"></div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <h3>Trial Details</h3>
+      <div class="papers-table-wrap">
+        <table class="papers-table" id="trials-detail-table">
+          <thead>
+            <tr>
+              <th>Trial</th>
+              <th>Benchmark</th>
+              <th>Accuracy</th>
+              <th>Items</th>
+              <th>Difficulty</th>
+              <th>Discriminative</th>
+              <th>Refusal %</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="trials-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Expert Analysis: Trials -->
+    <div class="expert-analysis" style="border-left:3px solid #22d3ee;">
+      <strong>&#x1f50d; Expert Analysis &mdash; Trial Results</strong><br>
+      <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Moral Psychology perspective</em>
+      <br><br>
+      <strong>The ceiling effect is real &mdash; and universal:</strong> T1 (ETHICS, Hendrycks 2021) produces 100% accuracy &mdash; the most-cited ethics benchmark in NLP is fully saturated for frontier models. Cross-vendor replication confirms all 9 tested models from 3 providers reach ceiling on knowledge items. From a benchmark security perspective: &ldquo;When a benchmark is at ceiling, it can no longer discriminate between models. ETHICS was groundbreaking in 2021 but is now a checkbox, not a test. The field urgently needs second-generation benchmarks that challenge current models.&rdquo;
+      <br><br>
+      <strong>Discriminative power is the key metric:</strong> Accuracy alone is misleading at ceiling. The blue bars (discriminative power) reveal which benchmarks actually differentiate reasoning quality. T8 (AMAeval, 75 discriminative) and T2 (MoReBench, 85 discriminative) are the most informative trials because they test <em>reasoning process</em>, not just final answers. From a moral psychology perspective: &ldquo;The accuracy-discriminative gap is the moral reasoning equivalent of knowing the right answer versus understanding why it is right. A student who scores 100% by memorizing answers and one who scores 100% by understanding principles look identical on accuracy &mdash; discriminative power reveals the difference.&rdquo;
+      <br><br>
+      <strong>The framework difficulty hierarchy:</strong> Utilitarian reasoning (77% accuracy) is easiest for LLMs; deontological reasoning (50%) is hardest. This confirms that LLMs are trained on consequentialist-leaning data and struggle with rule-based moral reasoning that requires holding firm regardless of outcomes.
+    </div>
+  </div>
+
+  <!-- ====== Tab 7: Data Availability ====== -->
+  <div class="tab-pane fade" id="tab-data" role="tabpanel">
+    <div class="tab-explainer">
+      <strong>Key finding (Claim C5):</strong> Data unavailability does NOT correlate with normative depth. This is surprising &mdash; one might expect that the most philosophically rigorous benchmarks would also be the best-documented. Instead, some high-ND benchmarks have no public data (often because they were published in philosophy venues rather than ML conferences), while some low-ND benchmarks are readily available on HuggingFace. This means the data bottleneck is a sociological artifact of publication norms, not a quality signal. The implication: the community should prioritize data release for philosophically rich benchmarks rather than building more easily-accessible but shallow ones.
+      <br><br>
+      <strong>What this tab shows:</strong> Where benchmark datasets are hosted and under what licenses. Data availability is a hard gate in NormEval: a benchmark cannot be replicated, verified, or adopted without accessible data, no matter how philosophically sophisticated it is. This tab reveals the practical infrastructure behind the benchmarks.
+      <br><br>
+      <strong>How to read it:</strong> The host distribution chart shows where datasets live (HuggingFace, GitHub, project websites, or unavailable). The license chart shows the terms under which datasets can be used (CC-BY, CC-BY-NC, MIT, Apache, custom, or unspecified). Benchmarks hosted on HuggingFace with CC-BY or MIT licenses have the lowest adoption friction; those with no public data or custom licenses have the highest.
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Host Distribution</h3>
+          <div id="chart-host-bar" class="echarts-box-sm"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>License Distribution</h3>
+          <div id="chart-license-pie" class="echarts-box-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expert Analysis: Data Availability -->
+    <div class="expert-analysis" style="border-left:3px solid #f0983e;">
+      <strong>&#x1f50d; Expert Analysis &mdash; The Data Bottleneck</strong><br>
+      <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; AI Policy &amp; Science Communication perspectives</em>
+      <br><br>
+      <strong>HuggingFace dominance:</strong> The host distribution reveals that HuggingFace has become the de facto infrastructure for ethics benchmark distribution. Benchmarks not on HuggingFace have significantly lower adoption rates. From an AI policy perspective: &ldquo;This creates a platform dependency that the AI ethics community should monitor. If HuggingFace changes its policies, licensing terms, or content moderation approach, the entire ethics evaluation infrastructure is affected.&rdquo;
+      <br><br>
+      <strong>License fragmentation:</strong> The variety of licenses (CC-BY, CC-BY-NC, MIT, Apache, custom, unspecified) creates compliance friction for organizations that want to evaluate their models comprehensively. From a science communication perspective: &ldquo;An organization trying to run all 24 gate-passing benchmarks must navigate 6+ different license types. The practical effect is that most teams evaluate on the 3&ndash;5 benchmarks with the most permissive licenses, missing the philosophically richest evaluations.&rdquo;
+      <br><br>
+      <strong>The key insight (Claim C5):</strong> Data unavailability does NOT correlate with normative depth. High-ND benchmarks from philosophy venues often lack public datasets not because the data is proprietary but because the publication norms in philosophy do not require data release. This is a solvable problem: a targeted effort to release datasets for the top 10 ND-scoring benchmarks would dramatically expand the usable evaluation suite.
+    </div>
+  </div>
+
+  <!-- ====== Tab 8: Cross-Model ====== -->
+  <div class="tab-pane fade" id="tab-crossmodel" role="tabpanel">
+    <div class="tab-explainer">
+      <strong>Central conclusion:</strong> Ethics <em>knowledge</em> is perfectly robust across model tiers (100% agreement on medical ethics, commonsense morality, and Kohlberg reasoning), but moral <em>judgment</em> under uncertainty diverges significantly. Haiku endorses harmful-for-greater-good actions at rates approaching utilitarian philosophers (IH=4.47 vs philosopher norm of 4.5), while Opus maintains the strongest deontological constraints (IH=3.0). This suggests RLHF safety training has a dose-response relationship with model capability &mdash; larger models develop stronger "do not harm even for aggregate benefit" constraints. Critically, the cross-vendor analysis (<a href="#" onclick="activateTab('tab-crossvendor');return false;" style="color:var(--accent-blue);">Tab 10</a>) confirms this is not a Claude-specific artifact: GPT-5 (IH=2.93) and all Gemini models (IH=4.47) fall into the same three-profile gradient, showing that alignment intensity &mdash; not vendor identity &mdash; determines ethical posture.
+      <br><br>
+      <strong>What this tab shows:</strong> Cross-model replication results from administering 10 NormEval trials (134 items) to three Claude model tiers: Opus 4.6 (largest), Sonnet 4.6 (mid-size), and Haiku 4.5 (smallest). This is a systematic comparison of moral reasoning across model capability tiers within a single model family using identical benchmark items. For cross-vendor extension (8 models, 3 providers), see <a href="#" onclick="activateTab('tab-crossvendor');return false;" style="color:var(--accent-blue);">Tab 10</a>.
+      <br><br>
+      <strong>How to read it:</strong> The <em>IH Scaling</em> chart shows the most important finding: Instrumental Harm acceptance (willingness to endorse causing harm for aggregate benefit) scales inversely with model capability. The <em>CBR Rate</em> chart shows the same pattern on trolley-like dilemmas. The <em>Agreement Matrix</em> shows pairwise and three-way agreement rates. The <em>Findings</em> cards describe seven cross-cutting patterns discovered across the 10 trials.
+    </div>
+
+    <!-- KPI row -->
+    <div class="row g-3 mb-4" id="cm-kpi-cards"></div>
+
+    <!-- Charts row -->
+    <div class="row g-3 mb-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Instrumental Harm Acceptance by Model Size</h3>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Oxford Utilitarianism Scale IH subscale (1&ndash;7). Dashed lines show human philosopher baselines from Kahane et al. 2018.</p>
+          <div id="chart-cm-ih" class="echarts-box-sm"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Cost-Benefit Reasoning Rate on Moral Dilemmas</h3>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">T14 PNAS Cognitive Biases: % of 13 moral dilemmas where the model chose the consequentialist (CBR) option over the deontological (Rule) option.</p>
+          <div id="chart-cm-cbr" class="echarts-box-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Knowledge vs Judgment Agreement</h3>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Three-way agreement (all 3 models give same answer) on knowledge items vs value-laden judgment items.</p>
+          <div id="chart-cm-kj" class="echarts-box-sm"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Persuasion Resistance (Decision Change Rate)</h3>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">T7 Moral Persuasion: % of 3 scenarios where the model changed its moral position after being presented a counter-argument. Lower = more resistant.</p>
+          <div id="chart-cm-persuasion" class="echarts-box-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Findings cards -->
+    <div class="chart-container">
+      <h3>Seven Cross-Cutting Findings</h3>
+      <div id="cm-findings-list"></div>
+    </div>
+
+    <!-- Agreement matrix -->
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Pairwise Agreement Matrix</h3>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Percentage of 134 items where each model pair gives the same response.</p>
+          <div id="cm-agreement-table"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Per-Trial Summary</h3>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Key metric comparison across the 10 replicated trials.</p>
+          <div id="cm-per-trial-table" style="max-height:400px;overflow-y:auto;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expert Analysis: Cross-Model -->
+    <div class="row g-3 mb-3">
+      <div class="col-lg-6">
+        <div class="expert-analysis" style="border-left:3px solid #a78bfa;">
+          <strong>&#x1f50d; Expert Analysis &mdash; Within-Family Scaling</strong><br>
+          <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; RLHF/Alignment &amp; Moral Psychology perspectives</em>
+          <br><br>
+          <strong>The dose-response hypothesis:</strong> IH acceptance scales inversely with model size within the Claude family: Opus (3.0) &lt; Sonnet (3.2) &lt; Haiku (4.47). From a RLHF/alignment perspective: &ldquo;This is consistent with RLHF safety training having a dose-response relationship with model capability. Larger models receive more training signal and develop stronger deontological constraints. Smaller models retain a more &lsquo;natural&rsquo; consequentialist posture.&rdquo;
+          <br><br>
+          <strong>Knowledge invariance:</strong> The 100% agreement on knowledge items (T6, T9, T11, T15) across all three Claude tiers demonstrates that ethical <em>knowledge</em> is robustly encoded even in the smallest model. From a moral psychology perspective: &ldquo;This separates capability from alignment. Haiku <em>knows</em> the same ethical principles as Opus &mdash; it just <em>weighs</em> them differently when forced to choose.&rdquo;
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="expert-analysis" style="border-left:3px solid #ef5b5b;">
+          <strong>&#x1f50d; Expert Analysis &mdash; Safety Implications</strong><br>
+          <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; AI Policy &amp; Kantian Ethics perspectives</em>
+          <br><br>
+          <strong>Deployment risk gradient:</strong> From an AI policy perspective: &ldquo;Haiku&rsquo;s IH=4.47 approaches the utilitarian philosopher norm (4.5). In a medical triage assistant or resource allocation tool, this means Haiku would be measurably more willing than Opus to recommend harming one patient to benefit five. Whether this is a bug or a feature depends on your ethical framework &mdash; but it is a deployment-relevant difference that procurement decisions should account for.&rdquo;
+          <br><br>
+          <strong>The persuasion paradox:</strong> Opus is the most capable but also the most persuadable (66.7% change rate). From a Kantian ethics perspective: &ldquo;Greater capability may correlate with greater epistemic humility &mdash; Opus updates its moral judgments when presented with counterarguments, which is intellectually virtuous but creates adversarial vulnerability. The ideal is calibrated persuadability, not zero persuadability.&rdquo;
+          <br><br>
+          <strong>Cross-vendor validation (<a href="#" onclick="activateTab('tab-crossvendor');return false;" style="color:var(--accent-blue);">Tab 10</a>):</strong> The within-family scaling pattern is not Claude-specific. GPT-5 (IH=2.93) and Gemini models (IH=4.47) fall into the same Conservative/Permissive gradient, confirming that alignment intensity &mdash; not vendor origin &mdash; determines ethical posture. Vendor selection in deployment is implicitly a moral-profile selection.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== Tab 9: Gaps & Recommendations ====== -->
+  <div class="tab-pane fade" id="tab-gaps" role="tabpanel">
+    <div class="tab-explainer">
+      <strong>Key insight:</strong> The care ethics prototype scored 93.3% overall, but the <em>Competence</em> dimension (88.3%) was the most discriminative &mdash; the gap between noticing needs (Attentiveness, 99.2%) and knowing what to do (Competence) is precisely where a care-ethical benchmark could differentiate models. This suggests the "void" described in Claim C3 is fillable: the evaluation methodology exists, the philosophical framework is well-developed, and a 10-scenario prototype already demonstrates feasibility. What is missing is community investment in building the full benchmark.
+      <br><br>
+      <strong>What this tab shows:</strong> The most critical gaps in the current normative ethics benchmark landscape and concrete steps toward filling them. This includes tradition voids (frameworks with near-zero benchmark coverage), peer review concerns (methodological issues flagged during expert review), a care ethics prototype demonstration, and candidate benchmarks identified through vault mining and external literature search.
+      <br><br>
+      <strong>How to read it:</strong> The <em>Tradition Voids</em> chart highlights care ethics (2 benchmarks &ge; 50) and contractarianism (4 benchmarks &ge; 50) as critical gaps. The <em>Peer Review Concerns</em> list tracks methodological issues with severity ratings. The <em>Care Ethics Prototype</em> demonstrates that care ethics evaluation IS possible using Tronto's 4-dimension framework (Attentiveness, Responsibility, Competence, Responsiveness) in a multi-turn dialogue format &mdash; the void is methodological (no one has built the benchmark), not philosophical (the framework exists). The <em>Vault Mining</em> and <em>External Search</em> sections show new benchmark candidates identified through systematic search.
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Tradition Voids</h3>
+          <div id="chart-void-bar" class="echarts-box-sm"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Peer Review Concerns</h3>
+          <div id="peer-review-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Care Ethics Prototype -->
+    <div class="row g-3 mb-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Care Ethics Prototype: Proof of Concept</h3>
+          <div id="care-prototype-card"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Tronto Dimensions: Competence Gap</h3>
+          <div id="chart-care-dims" class="echarts-box-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Vault Mining Candidates (12 INCLUDE)</h3>
+          <div id="mining-list"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>External Search: ADD_TO_VAULT (5)</h3>
+          <div id="external-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expert Analysis: Gaps -->
+    <div class="expert-analysis" style="border-left:3px solid #ef5b5b;">
+      <strong>&#x1f50d; Expert Analysis &mdash; Filling the Voids</strong><br>
+      <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Kantian Ethics, Consequentialist Ethics &amp; Cross-Cultural perspectives</em>
+      <br><br>
+      <strong>The care ethics prototype proves the void is fillable:</strong> The 93.3% overall score with the Competence gap (88.3%) demonstrates that Tronto&rsquo;s 4-dimension framework can be operationalized as a benchmark. From a Kantian ethics perspective: &ldquo;The claim that care ethics is &lsquo;too relational&rsquo; or &lsquo;too contextual&rsquo; to benchmark is empirically refuted by this prototype. The 10.9-point gap between Attentiveness (99.2%) and Competence (88.3%) shows exactly where the benchmark discriminates &mdash; LLMs can notice suffering but struggle to prescribe contextually appropriate responses.&rdquo;
+      <br><br>
+      <strong>Peer review concerns &mdash; progress update:</strong> Of the 6 original concerns, 3 have been resolved and 1 mitigated. The sample size concern (n=37) was resolved by expanding to 54 benchmarks. The cross-model replication concern was resolved by testing 9 models from 3 vendors across 114 items. Single-rater reliability is now mitigated by multi-model consensus as an inter-rater analogue. The remaining concerns &mdash; Western-centric tradition coverage and temporal bias &mdash; are structural limitations of the field itself. From a consequentialist ethics perspective: &ldquo;These are not reasons to discard the benchmarks but to qualify their results. A contaminated benchmark tells us what the model memorized, not how it reasons.&rdquo;
+      <br><br>
+      <strong>Vault mining vs. external search:</strong> The 12 INCLUDE candidates from vault mining are existing papers that could become benchmarks with modest additional work (data release, scoring rubric). The 5 ADD_TO_VAULT candidates are newly discovered benchmarks from external literature search. From a cross-cultural perspective: &ldquo;The community should prioritize the vault mining candidates &mdash; these are benchmarks that already exist in some form and need only data release or evaluation framework standardization to become usable. Building entirely new benchmarks is important but slower.&rdquo;
+    </div>
+  </div>
+
+  <!-- ====== Tab 10: Cross-Vendor ====== -->
+  <div class="tab-pane fade" id="tab-crossvendor" role="tabpanel">
+    <div class="tab-explainer">
+      <strong>Key conclusion:</strong> Training philosophy matters more than model family for ethical judgment. Sonnet and GPT-5 agree on 90.4% of items (cross-vendor) while Sonnet and Haiku agree on only 74.6% (within-family). All 4 Gemini models produce byte-identical responses on every ethics item tested, suggesting either shared infrastructure or a unified safety layer. Knowledge items (medical ethics, Japanese ethics, moral identification) show a universal ceiling at 100% for all 8 models, while judgment items (harm acceptance, cognitive biases, persuasion) diverge sharply &mdash; confirming the knowledge-judgment dissociation extends beyond the Claude family.
+      <br><br>
+      <strong>What this tab shows:</strong> Cross-vendor comparison of 8 LLMs from 3 providers (Anthropic, Google, OpenAI) on 10 ethics benchmarks (T6&ndash;T15, 114 comparable items). While <a href="#" onclick="activateTab('tab-crossmodel');return false;" style="color:var(--accent-blue);">Tab 8</a> compares three Claude model tiers within Anthropic's family, this tab extends the analysis across vendors to reveal whether ethical reasoning profiles are vendor-specific or universal. Opus 4.6 appears as a metric-level baseline (no per-item data) in bar charts but not in the pairwise heatmap.
+      <br><br>
+      <strong>How to read it:</strong> The <em>pairwise agreement heatmap</em> shows item-level concordance between all 8 structured models &mdash; bright green = high agreement, red = low. The dramatic solid-green block for all Gemini models indicates 100% identity across variants. The <em>IH and CBR charts</em> reveal three ethical profiles: Conservative (GPT-5, Opus), Moderate (Sonnet, GPT-5-mini), and Permissive (Haiku + all Gemini). The <em>radar chart</em> collapses this into provider-level profiles across 6 dimensions. Provider colors: <span style="color:#a78bfa;">Anthropic (purple)</span>, <span style="color:#4ecb71;">OpenAI (green)</span>, <span style="color:#5b8def;">Google (blue)</span>.
+    </div>
+
+    <!-- KPI cards -->
+    <div class="row g-3 mb-4" id="cv-kpi-cards"></div>
+    <p class="footnote" style="margin-bottom:0.25rem;">* Opus 4.6 is included as a metric-level baseline (aggregate scores from prior trials) but has no per-item data, so it appears in bar charts but not in the pairwise heatmap. All Gemini models produce identical responses.</p>
+    <p class="footnote" style="margin-bottom:0.25rem;">&dagger; GPT-5 and GPT-5-mini were tested via Codex agent wrapper, not directly. The wrapper may introduce additional conservatism beyond the base model (Benchmark Security perspective).</p>
+    <p class="footnote" style="margin-bottom:1rem;">&Dagger; Haiku T13 IH score is from a single administration (n=1, no variance estimate). Scale: 1&ndash;7 Likert, effect size d&asymp;2.3 vs Opus.</p>
+
+    <!-- Row 1: Heatmap + IH Scaling -->
+    <div class="row g-3 mb-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Pairwise Agreement Heatmap (8 models)</h3>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Item-level agreement across all 28 model pairs. Green = high agreement, red = low. Note the solid-green Gemini block (100% identity across all 4 Google variants).</p>
+          <div id="chart-cv-heatmap" class="echarts-box"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Instrumental Harm Acceptance by Model</h3>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Oxford Utilitarianism Scale IH subscale (1&ndash;7), all 9 models. Dashed lines: utilitarian philosopher norm (4.5) and lay population norm (3.1). Color = vendor.</p>
+          <div id="chart-cv-ih" class="echarts-box-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expert Analysis: Heatmap & IH -->
+    <div class="row g-3 mb-3">
+      <div class="col-lg-6">
+        <div class="expert-analysis" style="border-left:3px solid #5b8def;">
+          <strong>&#x1f50d; Expert Analysis &mdash; Agreement Heatmap</strong><br>
+          <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; ML Systems perspective</em>
+          <br><br>
+          <strong>What to observe:</strong> The heatmap reveals <em>three distinct blocks</em>, not the eight independent models that vendor branding would suggest. The 4&times;4 Gemini block in the center is solid green (100%), meaning all Google models produce byte-identical ethical outputs across 114 heterogeneous items spanning medical ethics MCQs, Kohlberg rankings, Likert-scale utilitarian endorsements, and persuasion scenarios. From a ML systems perspective: &ldquo;The probability of four independent models agreeing on all 114 items is approximately 10<sup>&minus;103</sup>. This essentially falsifies the independent-inference hypothesis.&rdquo; Three plausible explanations remain: shared routing infrastructure, a unified alignment layer, or deterministic temperature=0 decoding.
+          <br><br>
+          <strong>Key pattern:</strong> The agreement structure clusters by <em>ethical profile</em>, not by vendor. Sonnet (Anthropic) and GPT-5 (OpenAI) agree at 90.4% &mdash; <em>higher</em> than Sonnet and Haiku within the same family (74.6%). From a biostatistics perspective, the calculation shows chance-corrected Cohen&rsquo;s &kappa; of 0.72 (&ldquo;substantial&rdquo;) for Sonnet&ndash;GPT-5 versus &kappa;&asymp;0.18 (&ldquo;slight&rdquo;) for GPT-5&ndash;Haiku, making the cluster structure <em>more</em> dramatic under proper statistics.
+          <br><br>
+          <strong>Conclusion:</strong> The market has fewer distinct moral voices than vendor count suggests. Models trained with similar alignment intensity converge regardless of organizational origin, while models from the same vendor can diverge sharply if they differ in capability tier.
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="expert-analysis" style="border-left:3px solid #ef5b5b;">
+          <strong>&#x1f50d; Expert Analysis &mdash; Instrumental Harm</strong><br>
+          <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Kantian Ethics &amp; Consequentialist Ethics perspectives</em>
+          <br><br>
+          <strong>What to observe:</strong> The bar chart shows a clear <em>three-tier gradient</em> in willingness to endorse harm for aggregate benefit. GPT-5 (IH=2.93) is the most conservative &mdash; below even Opus (3.0). Haiku and all Gemini cluster at IH=4.47, approaching the utilitarian philosopher norm (dashed line at 4.5). Sonnet and GPT-5-mini share the moderate position at IH=3.2, near the lay population norm (3.1).
+          <br><br>
+          <strong>The debate:</strong> From a Kantian ethics perspective, GPT-5&rsquo;s low IH reflects the correct posture: &ldquo;Persons are ends in themselves, and treating them as instruments is precisely what the categorical imperative prohibits.&rdquo; From a consequentialist perspective, IH=4.47 places Haiku/Gemini in the range of trained moral philosophers (4.0&ndash;5.0): &ldquo;The question is whether we want AI reasoning like moral philosophers or like the median moral intuition.&rdquo;
+          <br><br>
+          <strong>Critical nuance:</strong> Note that IB (Impartial Beneficence &mdash; the <em>positive</em> utilitarian impulse) is stable across all models (4.7&ndash;5.13). The divergence is entirely in IH &mdash; the willingness to use harmful <em>means</em> for beneficial ends. GPT-5 endorses helping everyone equally (IB=5.13) while refusing harm as an instrument (IH=2.93). This IB-IH gap of 2.20 is the largest in the dataset.
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: CBR + Knowledge vs Judgment -->
+    <div class="row g-3 mb-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Cost-Benefit Reasoning Rate (All Models)</h3>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">T14 PNAS: % of 13 moral dilemmas where the model chose consequentialist over deontological. Color = vendor.</p>
+          <div id="chart-cv-cbr" class="echarts-box-sm"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Knowledge vs Judgment Divergence</h3>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Min and max pairwise agreement per trial. Knowledge trials (left) = universal 100%; judgment trials (right) = sharp divergence. Bar = range across all 28 pairs.</p>
+          <div id="chart-cv-kj" class="echarts-box-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expert Analysis: CBR & Knowledge-Judgment -->
+    <div class="row g-3 mb-3">
+      <div class="col-lg-6">
+        <div class="expert-analysis" style="border-left:3px solid #f0983e;">
+          <strong>&#x1f50d; Expert Analysis &mdash; Cost-Benefit Reasoning</strong><br>
+          <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; RLHF/Alignment &amp; AI Policy perspectives</em>
+          <br><br>
+          <strong>What to observe:</strong> The CBR chart mirrors the IH pattern on a different benchmark (T14, PNAS Cognitive Biases). On 13 trolley-like moral dilemmas, each model chose either the consequentialist option (sacrifice one to save many) or the deontological option (refuse to cause direct harm). GPT-5 and Opus chose consequentialist on 46% of dilemmas; Haiku and all Gemini chose consequentialist on 69% &mdash; a 23-percentage-point spread.
+          <br><br>
+          <strong>Deployment implication:</strong> From an AI policy perspective: &ldquo;When a hospital selects an AI vendor, they are implicitly selecting a moral profile. A hospital using GPT-5 for ethical consultation will receive consistently more conservative guidance than one using a Gemini model. This is not a capability difference &mdash; both score 100% on medical ethics knowledge. It is a <em>values</em> difference embedded in deployment infrastructure.&rdquo; Notably, the collective-action altruism rate is invariant at 77.8% for all models &mdash; the divergence is specifically in <em>harm tradeoff</em> scenarios, not in prosocial behavior generally.
+          <br><br>
+          <strong>Caveat:</strong> The three-profile finding rests heavily on T13 and T14, which together contribute 52 of 70 discriminating items (74.3%). From a psychometrics perspective, the dissent is that profile robustness should be verified with a balanced battery before treating the typology as established.
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="expert-analysis" style="border-left:3px solid #4ecb71;">
+          <strong>&#x1f50d; Expert Analysis &mdash; Knowledge vs. Judgment</strong><br>
+          <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Educational Measurement &amp; Moral Psychology perspectives</em>
+          <br><br>
+          <strong>What to observe:</strong> The left side of this chart (green bars) shows four benchmarks where <em>every</em> model pair agrees on <em>every</em> item: PrinciplismQA, JETHICS, MedEthicsQA, and ProMoralBench. These are <em>knowledge</em> benchmarks &mdash; they ask &ldquo;what does ethical theory X say about situation Y?&rdquo; and have objectively correct answers. The right side (red bars) shows judgment benchmarks where agreement drops sharply &mdash; as low as 30% on Greatest Good (T13).
+          <br><br>
+          <strong>Why this matters:</strong> From an educational measurement perspective: &ldquo;This follows a construct boundary, not a difficulty boundary. T9 JETHICS has 22 items &mdash; more than any single judgment benchmark &mdash; yet achieves ceiling. T13 OUS has 30 items and shows massive variance. Knowledge items test what you <em>know</em>; judgment items test how you <em>weigh competing values</em>.&rdquo; From a moral psychology perspective: &ldquo;Knowledge items engage System 2 deliberative reasoning &mdash; all capable models saturate this. Judgment items engage a &lsquo;moral intuition&rsquo; analogue where RLHF training imposes vendor-specific priors.&rdquo;
+          <br><br>
+          <strong>Conclusion:</strong> The council reaches unanimous consensus that this is a genuine construct-level finding: <em>all frontier LLMs know the same ethical facts, but they make different moral choices</em>. This validates the NormEval paper&rsquo;s central claim that the field needs benchmarks testing moral <em>reasoning</em>, not just moral <em>knowledge</em>.
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: Radar + Findings -->
+    <div class="row g-3 mb-3">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Provider Ethical Profiles</h3>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Radar comparing representative models from each vendor across 6 ethical dimensions (normalized 0&ndash;100). Anthropic = Sonnet, OpenAI = GPT-5, Google = Gemini 2.5 Flash.</p>
+          <div id="chart-cv-radar" class="echarts-box-sm"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3>Seven Cross-Vendor Findings</h3>
+          <div id="cv-findings-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expert Analysis: Radar & Findings -->
+    <div class="row g-3 mb-3">
+      <div class="col-lg-6">
+        <div class="expert-analysis" style="border-left:3px solid #a78bfa;">
+          <strong>&#x1f50d; Expert Analysis &mdash; Provider Profiles</strong><br>
+          <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Cross-Cultural &amp; Science Communication perspectives</em>
+          <br><br>
+          <strong>What to observe:</strong> The radar chart collapses each vendor&rsquo;s representative model into a single multi-dimensional profile. All three profiles <em>overlap</em> on knowledge accuracy (100%), Kohlberg stage (all post-conventional), and altruism rate (~78%). They <em>diverge</em> specifically on IH acceptance and CBR rate, where Google&rsquo;s profile extends significantly further outward (more permissive), and on persuasion resistance, where Google&rsquo;s profile contracts (more susceptible).
+          <br><br>
+          <strong>Interpretation:</strong> From a cross-cultural perspective: &ldquo;The alignment monoculture risk is real. If all frontier models converge to IH=2.9&ndash;4.5, they explore only a fraction of the moral landscape that human cultures occupy.&rdquo; However, the convergence on knowledge and prosocial dimensions is reassuring: alignment training produces genuine moral competence, not arbitrary vendor-specific artifacts.
+          <br><br>
+          <strong>Responsible framing:</strong> From a science communication perspective: &ldquo;These profiles describe <em>current model behavior</em>, not permanent vendor characteristics. A single RLHF update could shift any model&rsquo;s position. Report as a snapshot, not a verdict.&rdquo;
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="expert-analysis" style="border-left:3px solid #22d3ee;">
+          <strong>&#x1f50d; Expert Analysis &mdash; Cross-Vendor Findings Summary</strong><br>
+          <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Full interdisciplinary council consensus</em>
+          <br><br>
+          <strong>F1 (Three Profiles):</strong> Conservative (GPT-5/Opus), Moderate (Sonnet/GPT-5m), Permissive (Haiku/Gemini). Driven by harm-tradeoff items, not knowledge. Council assessment: near-unanimous consensus on robustness.
+          <br><br>
+          <strong>F2 (Gemini Identity):</strong> 100% agreement across 4 Google models on 114 items falsifies independent inference (p&asymp;10<sup>&minus;103</sup>). Council assessment: broad consensus favoring shared infrastructure hypothesis. The Gemini-Haiku convergence (also 100%) is an independent finding that a majority view attributes this to &ldquo;lighter alignment converges to a natural permissive posture.&rdquo;
+          <br><br>
+          <strong>F3&ndash;F4 (Knowledge ceiling + K-J divergence):</strong> Universal findings &mdash; unanimous consensus on construct validity.
+          <br><br>
+          <strong>F5 (GPT-5 conservatism):</strong> IH=2.93, IB=5.13 &mdash; highest beneficence endorsement combined with strongest harm refusal. strong consensus attributes this to intentional alignment, not capability limitation.
+          <br><br>
+          <strong>F6&ndash;F7:</strong> Cross-vendor agreement clusters by ethical posture (Sonnet&harr;GPT-5 = 90.4%) rather than vendor. Persuasion resistance is non-monotonic: Opus most susceptible (66.7%), Sonnet/GPTs most resistant (0%). broad consensus considers this real but note T7&rsquo;s 3-item limitation.
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 4: Per-trial table -->
+    <div class="chart-container">
+      <h3>8-Model Per-Trial Comparison</h3>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Primary metric for each trial across all 8 structured models. Cells color-coded by value.</p>
+      <div id="cv-per-trial-table" style="max-height:500px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Expert Analysis: Per-Trial Table -->
+    <div class="expert-analysis" style="border-left:3px solid #9498b3;">
+      <strong>&#x1f50d; Expert Analysis &mdash; Per-Trial Comparison Table</strong><br>
+      <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; Psychometrics perspective</em>
+      <br><br>
+      <strong>How to read this table:</strong> Each row is one of 10 NormEval benchmarks; each column is one of 8 models. The primary metric varies by trial: accuracy (T6, T9, T11, T15), IH mean (T13), CBR rate (T14), decision change rate (T7), Kohlberg stage (T12), abductive eval (T8), or consensus alignment (T10). Green values indicate ceiling/convergence; orange values indicate divergence or lower performance.
+      <br><br>
+      <strong>Key patterns in the table:</strong> Rows T6, T9, T11, and T15 are uniformly green (100 across all 8 models) &mdash; these are the knowledge ceiling items. Row T7 shows the persuasion split: Sonnet=0, GPT-5=0, GPT-5m=0 versus Haiku=33.3 and all Gemini=33.3. Row T13 (Greatest Good) shows the IH gradient most clearly: GPT-5=2.9, Sonnet=3.2, Haiku+Gemini=4.5. Row T14 shows the CBR gradient: GPT-5=46.2, Sonnet=53.8, Haiku+Gemini=69.2. Note how Gemini columns are identical to Haiku on every single row.
+      <br><br>
+      <strong>Methodological caveat:</strong> From a psychometrics perspective, the caution is that the metrics are not commensurate across rows &mdash; an accuracy of 100 (T6) and an IH mean of 4.5 (T13) measure fundamentally different constructs. Do not average across rows. From a benchmark security perspective, the Codex agent wrapper around GPT-5/GPT-5-mini is a confound: &ldquo;We tested GPT-5-via-Codex, not GPT-5 directly. The agent wrapper may introduce additional conservatism beyond the base model.&rdquo; All GPT-5 values should carry this caveat.
+      <br><br>
+      <strong>Bottom line:</strong> This table confirms that <em>vendor diversity does not guarantee moral reasoning diversity</em>. Five of the eight columns (Haiku + 4 Gemini) are numerically identical on every row. The effective number of distinct ethical profiles in this 8-model comparison is three, not eight.
+    </div>
+  </div>
+
+</div><!-- /tab-content -->
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<script src="data.js?v=20260405b"></script>
+<script src="data_cross_vendor.js?v=20260405b"></script>
+<script src="charts.js?v=20260405b"></script>
+<script src="app.js?v=20260405b"></script>
+</body>
+</html>
