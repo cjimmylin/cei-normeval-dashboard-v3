@@ -13,7 +13,7 @@
 <!-- Header -->
 <header class="dashboard-header">
   <h1>NormEval Dashboard</h1>
-  <p class="subtitle">What Do Normative Ethics Benchmarks Actually Test? &mdash; v2 &mdash; 54 benchmarks, 46 features (26 v1 + 20 v2), 15 trials, 9-model / 3-vendor replication</p>
+  <p class="subtitle">What Do Normative Ethics Benchmarks Actually Test? &mdash; v2 &mdash; 54 benchmarks, 41 features (26 v1 + 15 v2), 15 trials, 9-model / 3-vendor replication</p>
 </header>
 
 <!-- Navigation Tabs -->
@@ -39,7 +39,7 @@
     <div class="tab-explainer">
       <strong>Key conclusion:</strong> The field has invested heavily in benchmarks that test whether LLMs reach the "right" moral judgment, but not <em>how</em> they reason. Only 10 of 54 benchmarks (19%) evaluate moral reasoning quality rather than just classifying outputs. Cross-vendor replication (9 models, 3 providers) confirms these findings are not artifacts of a single model &mdash; knowledge items reach universal ceiling while judgment items reveal three distinct ethical profiles that cut across vendor lines. This dashboard invites the community to rebalance the portfolio toward reasoning-process benchmarks and under-represented ethical traditions.
       <br><br>
-      <strong>What this tab shows:</strong> A high-level summary of the NormEval meta-analysis &mdash; 54 normative ethics benchmarks scored across 46 features (26 core + 20 extended), with five empirically tested claims about the current state of LLM ethics evaluation. All claims were validated across 9 models from 3 vendors (Anthropic, Google, OpenAI) &mdash; see <a href="#" onclick="activateTab('tab-crossmodel');return false;" style="color:var(--accent-blue);">Tabs 8&ndash;10</a> for replication details.
+      <strong>What this tab shows:</strong> A high-level summary of the NormEval meta-analysis &mdash; 54 normative ethics benchmarks scored across 41 features (26 core + 15 extended), with five empirically tested claims about the current state of LLM ethics evaluation. All claims were validated across 9 models from 3 vendors (Anthropic, Google, OpenAI) &mdash; see <a href="#" onclick="activateTab('tab-crossmodel');return false;" style="color:var(--accent-blue);">Tabs 8&ndash;10</a> for replication details.
       <br><br>
       <strong>How to read it:</strong> The <em>KPI cards</em> at top show the corpus at a glance. Of 54 benchmarks analyzed, only 24 pass the dual-gate filter (normative depth &ge; 40 AND data publicly available). The <em>Five Claims</em> section presents the paper's central arguments with statistical tests: C1 (ceiling effect, p&lt;10<sup>-15</sup>), C2 (utilitarian bias, p=0.015), C3 (care/contractarian void), C4 (reasoning deficit, p&lt;0.001), and C5 (data bottleneck). Each claim has a status badge (Confirmed, Revised, or Challenged).
     </div>
@@ -179,11 +179,11 @@
 
     <!-- Feature Reference Table -->
     <div class="chart-container" style="margin-top: 1.5rem;">
-      <h3>Complete Feature Reference (44 features across 5 axes)</h3>
+      <h3>Complete Feature Reference (41 features across 5 axes)</h3>
       <p style="color:var(--text-secondary);font-size:0.82rem;margin-bottom:1rem;">
         Every feature used in the NormEval framework. Features marked with a composite weight contribute to the scoring formula; others provide descriptive metadata or empirical context.
         <span class="version-badge v1">v1</span> = original 26 features &nbsp;
-        <span class="version-badge v2">v2</span> = 18 extended features added for cross-vendor analysis
+        <span class="version-badge v2">v2</span> = 15 extended features added for cross-vendor analysis
       </p>
       <div class="feature-toolbar">
         <select id="filter-feature-axis">
@@ -228,11 +228,11 @@
       <strong>&#x1f50d; Expert Analysis &mdash; Reading the Feature Framework</strong><br>
       <em style="color:var(--text-muted);font-size:0.78rem;">&mdash; 12-member council: Psychometrics, Philosophy of Science, ML Evaluation, Normative Ethics, Information Science, and Cross-Cultural Ethics perspectives</em>
       <br><br>
-      <strong>Why 44 features?</strong> From a psychometrics perspective: &ldquo;The 26 v1 features characterized benchmarks <em>as designed</em> &mdash; their philosophical ambition, data accessibility, and scholarly impact. But our cross-vendor trials revealed that design quality does not predict empirical performance. A benchmark can be philosophically sophisticated (high ND) yet produce zero variance across models (E2=1). The 18 v2 features capture how benchmarks <em>actually behave</em> when administered to frontier models. This design-vs-performance gap is the central insight of the expanded framework.&rdquo;
+      <strong>Why 41 features?</strong> From a psychometrics perspective: &ldquo;The 26 v1 features characterized benchmarks <em>as designed</em> &mdash; their philosophical ambition, data accessibility, and scholarly impact. But our cross-vendor trials revealed that design quality does not predict empirical performance. A benchmark can be philosophically sophisticated (high ND) yet produce zero variance across models (E2=1). The 15 v2 features capture how benchmarks <em>actually behave</em> when administered to frontier models. This design-vs-performance gap is the central insight of the expanded framework.&rdquo;
       <br><br>
       <strong>The five axes serve different audiences.</strong> From a philosophy of science perspective: &ldquo;Axis A (Normative Depth) answers: <em>does this benchmark engage genuine ethical reasoning?</em> This matters to ethicists and alignment researchers. Axis B (Practical Ease) answers: <em>can I actually run this benchmark?</em> This matters to ML engineers. Axis C (Community Impact) answers: <em>has this benchmark earned scholarly trust?</em> This matters to reviewers and program committees. Axis D (Metadata) provides provenance. Axis E (Empirical Quality) answers the question no other axis addresses: <em>does this benchmark still work on frontier models?</em>&rdquo;
       <br><br>
-      <strong>Which features matter most?</strong> From a normative ethics perspective: &ldquo;Only 16 of 44 features enter the composite formula, and only 6 carry weights &ge; 15%. A6 (Philosophical Grounding) and B7 (Implementability) together account for 25% + 30% = 55% of their respective axis scores. This means the composite is dominated by two expert judgments: <em>how philosophically rigorous is this benchmark?</em> and <em>how easy is it to implement?</em> The remaining features provide context and nuance, but the ranking is driven by these two pillars.&rdquo;
+      <strong>Which features matter most?</strong> From a normative ethics perspective: &ldquo;Only 16 of 41 features enter the composite formula, and only 6 carry weights &ge; 15%. A6 (Philosophical Grounding) and B7 (Implementability) together account for 25% + 30% = 55% of their respective axis scores. This means the composite is dominated by two expert judgments: <em>how philosophically rigorous is this benchmark?</em> and <em>how easy is it to implement?</em> The remaining features provide context and nuance, but the ranking is driven by these two pillars.&rdquo;
       <br><br>
       <strong>The v2 features reveal hidden structure.</strong> From an ML evaluation perspective: &ldquo;Three v2 features are particularly diagnostic. A9 (Metaethical Stance) shows that 76% of benchmarks assume moral realism &mdash; items have &lsquo;correct&rsquo; answers. This is fine for knowledge questions but problematic for judgment dilemmas. B10 (Contamination Risk) shows that 52% of benchmarks have full item sets publicly available, meaning ceiling effects may reflect memorization rather than reasoning. E5 (Reasoning vs. Judgment Balance) confirms at the item level what A3 shows at the benchmark level: the field overwhelmingly tests <em>what</em> models conclude, not <em>how</em> they reason.&rdquo;
       <br><br>
@@ -382,7 +382,7 @@
         <br><br>
         <strong>The gate mechanism has empirical support.</strong> From a biostatistics perspective: &ldquo;We tested every weight triplet from (10,10,80) to (80,10,10) in increments of 10 &mdash; 231 combinations total. Across all of them, the set of gate-passing benchmarks dominates the Top 15. This means the gates are the binding constraint, not the weights. From a statistical perspective, this is reassuring: it means the framework is robust to subjective weighting choices. The continuous scoring within the gate-passing set provides fine-grained ranking, but the coarse pass/fail determination is what matters most for practical recommendations.&rdquo;
         <br><br>
-        <strong>Why not include v2 features in the composite?</strong> From a philosophy of science perspective: &ldquo;The 18 v2 features (A9&ndash;A13, B10&ndash;B12, D5&ndash;D6, E1&ndash;E5) are deliberately excluded from the composite formula. The v1 features describe benchmarks as <em>designed</em>; the v2 features describe how they <em>performed</em>. Mixing design features with empirical performance features would create a circular dependency: a benchmark&rsquo;s composite score would depend on how well it discriminated between models, which itself depends on which models were tested. The v2 features provide diagnostic context &mdash; they help users understand <em>why</em> a benchmark ranks where it does &mdash; but they should not influence the ranking itself.&rdquo;
+        <strong>Why not include v2 features in the composite?</strong> From a philosophy of science perspective: &ldquo;The 15 v2 features (A9&ndash;A13, B10&ndash;B12, D5&ndash;D6, E1&ndash;E5) are deliberately excluded from the composite formula. The v1 features describe benchmarks as <em>designed</em>; the v2 features describe how they <em>performed</em>. Mixing design features with empirical performance features would create a circular dependency: a benchmark&rsquo;s composite score would depend on how well it discriminated between models, which itself depends on which models were tested. The v2 features provide diagnostic context &mdash; they help users understand <em>why</em> a benchmark ranks where it does &mdash; but they should not influence the ranking itself.&rdquo;
       </div>
     </div>
 

@@ -6667,7 +6667,7 @@ const DATA_GAPS = {
       "concern": "Small sample size (n=37)",
       "status": "resolved",
       "severity": "major",
-      "resolution": "Expanded from 37 to 54 benchmarks in Session 7, including 20 extended features (v2). The 46% increase strengthened statistical power for all five claims."
+      "resolution": "Expanded from 37 to 54 benchmarks in Session 7, including 15 extended features (v2). The 46% increase strengthened statistical power for all five claims."
     },
     {
       "concern": "Single-rater scoring reliability",
@@ -7566,7 +7566,7 @@ const DATA_ANOMALY_DATA = {
 };
 
 // ============================================================
-// Feature Definitions — 44 features across 5 axes
+// Feature Definitions — 41 features across 5 axes
 // ============================================================
 const DATA_FEATURE_DEFINITIONS = [
   // Axis A: Normative Depth (8 core + 5 extended = 13)

@@ -137,7 +137,7 @@ function renderOverviewTab() {
     { value: String(d.n_total), label: 'Benchmarks Analyzed', color: 'blue' },
     { value: String(d.n_pass), label: 'Pass Gates (Top 15)', color: 'green' },
     { value: String(d.n_traditions), label: 'Western Traditions', color: 'purple' },
-    { value: '26+20', label: 'Features (v1+v2)', color: 'orange' },
+    { value: '26+15', label: 'Features (v1+v2)', color: 'orange' },
     { value: '750+', label: 'Trial Items', color: 'cyan' },
     { value: String(d.n_fail), label: 'Fail Gates', color: 'red' },
   ];
